@@ -51,23 +51,23 @@ impl TestApp {
         self.get(None).await
     }
 
-    pub async fn signup(&self) -> reqwest::Response {
+    pub async fn post_signup(&self) -> reqwest::Response {
         self.post("signup").await
     }
 
-    pub async fn login(&self) -> reqwest::Response {
+    pub async fn post_login(&self) -> reqwest::Response {
         self.post("login").await
     }
 
-    pub async fn logout(&self) -> reqwest::Response {
+    pub async fn post_logout(&self) -> reqwest::Response {
         self.post("logout").await
     }
 
-    pub async fn verify_2fa(&self) -> reqwest::Response {
+    pub async fn post_verify_2fa(&self) -> reqwest::Response {
         self.post("verify-2fa").await
     }
 
-    pub async fn verify_token(&self) -> reqwest::Response {
+    pub async fn post_verify_token(&self) -> reqwest::Response {
         self.post("verify-token").await
     }
 
