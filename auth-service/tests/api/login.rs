@@ -1,5 +1,4 @@
 use crate::helpers::TestApp;
-use reqwest::Body;
 
 #[tokio::test]
 async fn login_returns_200() {
