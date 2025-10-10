@@ -1,4 +1,5 @@
 use auth_service::Application;
+use uuid::Uuid;
 
 pub struct TestApp {
     pub address: String,
@@ -6,6 +7,7 @@ pub struct TestApp {
 }
 
 impl TestApp {
+
     pub async fn new() -> Self {
         let app = Application::build("127.0.0.1:0")
             .await
@@ -39,9 +41,14 @@ impl TestApp {
             .expect("Failed to execute GET request.")
     }
 
-    async fn post(&self, path: &str) -> reqwest::Response {
+    
+    async fn post<Body>(&self, path: &str, body: &Body) -> reqwest::Response
+    where
+        Body: serde::Serialize,
+    {
         self.http_client
             .post(self.to_url(Some(path)))
+            .json(body)
             .send()
             .await
             .expect("Failed to execute POST request.")
@@ -51,24 +58,43 @@ impl TestApp {
         self.get(None).await
     }
 
-    pub async fn post_signup(&self) -> reqwest::Response {
-        self.post("signup").await
+    pub async fn post_signup<Body>(&self, body: &Body) -> reqwest::Response
+    where
+        Body: serde::Serialize
+    {
+        self.post("signup", body).await
     }
 
-    pub async fn post_login(&self) -> reqwest::Response {
-        self.post("login").await
+    pub async fn post_login<Body>(&self, body: &Body) -> reqwest::Response
+    where
+        Body: serde::Serialize
+    {
+        self.post("login", body).await
     }
 
-    pub async fn post_logout(&self) -> reqwest::Response {
-        self.post("logout").await
+    pub async fn post_logout<Body>(&self, body: &Body) -> reqwest::Response
+    where
+        Body: serde::Serialize
+    {
+        self.post("logout", body).await
     }
 
-    pub async fn post_verify_2fa(&self) -> reqwest::Response {
-        self.post("verify-2fa").await
+    pub async fn post_verify_2fa<Body>(&self, body: &Body) -> reqwest::Response
+    where
+        Body: serde::Serialize
+    {
+        self.post("verify-2fa", body).await
     }
 
-    pub async fn post_verify_token(&self) -> reqwest::Response {
-        self.post("verify-token").await
+    pub async fn post_verify_token<Body>(&self, body: &Body) -> reqwest::Response
+    where
+        Body: serde::Serialize
+    {
+        self.post("verify-token", body).await
     }
 
+}
+
+pub fn get_random_email() -> String {
+    format!("{}@example.com", Uuid::new_v4())
 }

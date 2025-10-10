@@ -4,7 +4,8 @@ use crate::helpers::TestApp;
 async fn verify_token_returns_200() {
     let app = TestApp::new().await;
 
-    let response = app.post_verify_token().await;
+    let body = serde_json::json!({});
+    let response = app.post_verify_token(&body).await;
 
     assert_eq!(response.status().as_u16(), 200);
 }
